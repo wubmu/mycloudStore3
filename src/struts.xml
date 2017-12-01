@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+    <constant name="homePath" value="f:\realPath"></constant>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+    <constant name="struts.multipart.saveDir" value="f:\saveFile"></constant>
+    <!--<constant name="struts.multipart.saveDir" value="f:\saveFile"></constant>-->
+    <package name="upload" extends="struts-default" namespace="/">
+        <global-results>
+            <result name="login">login.jsp</result>
+        </global-results>
+        <action name="upload" class="com.wyb.action.UploadAction">
+
+            <result name="input">index.jsp</result>
+            <result name="uploadOK" type="plainText">
+                <param name="location">demo.json</param>
+            </result>
+        </action>
+        <action name="show" class="com.wyb.action.ShowAction">
+            <result name="success">show.jsp</result>
+        </action>
+        <action name="deleteFile" class="com.wyb.action.DeleteFileAction">
+            <result name="success" type="chain">show</result>
+        </action>
+        <action name="login" class="com.wyb.action.LoginAction">
+            <result name="success">show.action</result>
+            <result name="login">login.jsp</result>
+        </action>
+        <action name="login1" class="com.wyb.action.LoginAction1">
+            <result name="success" type="chain">show</result>
+            <result name="login">login.jsp</result>
+        </action>
+        <action name="createFile" class="com.wyb.action.CreateDocumentAction">
+            <result name="success" type="chain">show</result>
+        </action>
+        <action name="download" class="com.wyb.action.DownloadAction">
+            <result name="success" type="stream">
+                <param name="contentType">${contentType}</param>
+                <param name="contentDisposition">attachment;filename=${fileName}</param>
+                <param name="inputName">targetFile</param>
+            </result>
+            <result name="login">login.jsp</result>
+        </action>
+        <action name="down" class="com.wyb.action.DownAction">
+            <result name="success" type="stream">
+                <param name="contentType">${contentType}</param>
+                <param name="contentDisposition">attachment;filename=${fileName}</param>
+                <param name="inputName">targetFile</param>
+            </result>
+        </action>
+        <action name="typeSelect" class="com.wyb.action.TypeSelectAction">
+            <result name="success">show.jsp</result>
+        </action>
+        <action name="register" class="com.wyb.action.RegisterAction">
+            <result name="success" type="chain">show</result>
+
+        </action>
+        <action name="search" class="com.wyb.action.SearchAction">
+            <result name="success">show.jsp</result>
+        </action>
+        <action name="logout" class="com.wyb.action.LogoutAction">
+            <result name="success">login.jsp</result>
+        </action>
+    </package>
+    <package name="json" extends="struts-default,json-default" namespace="/json">
+        <action name="json" class="com.wyb.action.JsonAction" method="json">
+            <result type="json">
+                <param name="root">dataMap</param>
+            </result>
+        </action>
+
+    </package>
+</struts>
